@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const lists = [
+  {
+    id: "pflegekasse",
+    title: "Für die Pflegekasse",
+    items: [
+      "Welche Ansprüche sind geklärt?",
+      "Welche Sachleistungen wurden für den Monat abgerechnet?",
+      "Welcher Entlastungsrest stammt aus welchem Jahr?",
+      "Welche Nachweise fehlen?",
+      "Welche Wirkung hätte eine geplante Umwandlung auf das Pflegegeld?",
+    ],
+    link: "/budgetieren/pflegebudget-fahrplan/",
+    label: "Zum Pflegebudget-Fahrplan",
+  },
+  {
+    id: "erstattung",
+    title: "Für die Erstattung",
+    items: [
+      "Konkrete Leistung und Erstattungsweg geklärt",
+      "Anerkennung geprüft",
+      "Vollständige Rechnung vorhanden",
+      "Erforderlicher Leistungs- oder Zahlungsnachweis beigefügt",
+      "Einreichung und Rückmeldung dokumentiert",
+    ],
+    link: "/beantragen/entlastungsbetrag-beantragen/",
+    label: "Zum Erstattungsleitfaden",
+  },
+  {
+    id: "pflegeantrag",
+    title: "Für den ersten Pflegeantrag",
+    items: [
+      "Zuständige Kasse beziehungsweise Versicherung ermittelt",
+      "Antrag und Eingang dokumentiert",
+      "Gegebenenfalls Vertretung geklärt",
+      "Alltagsbezogene Beobachtungen notiert",
+      "Relevante vorhandene Unterlagen zusammengestellt",
+      "Beratungsbedarf und nächste Rückfragen notiert",
+    ],
+    link: "/beantragen/pflegegrad-beantragen/",
+    label: "Zum ersten Pflegeantrag",
+  },
+];
+---
+
+<BaseLayout
+  title="Checklisten für Pflegebudget, Antrag und Alltagsbegleitung"
+  description="Drei kurze Listen für das nächste Gespräch mit der Pflegekasse, die Erstattung und den ersten Pflegeantrag. Kostenlos und direkt druckbar."
+>
+  <header class="page-heading" data-pagefind-body>
+    <p class="eyebrow accent">Ein Blatt. Ein nächster Schritt.</p>
+    <h1>
+      Weniger im Kopf.
+      <br />
+      Mehr auf der Liste.
+    </h1>
+    <p>
+      Manchmal fehlt kein weiterer Ratgeber, sondern eine kurze Liste für das
+      nächste Gespräch. Unsere Checklisten bündeln die wichtigsten Fragen. Sie
+      lassen sich direkt ausdrucken und enthalten keine Felder, die Sie an uns
+      zurückschicken müssen.
+    </p>
+  </header>
+  <section class="simple-content prose" data-pagefind-body>
+    {lists.map((l) => (
+      <section id={l.id}>
+        <h2>{l.title}</h2>
+        <ul class="checklist">
+          {l.items.map((text, i) => (
+            <li>
+              <input type="checkbox" id={`${l.id}-${i}`} />
+              <label for={`${l.id}-${i}`}>{text}</label>
+            </li>
+          ))}
+        </ul>
+        <a class="text-link" href={l.link}>
+          {l.label} <span>↗</span>
+        </a>
+      </section>
+    ))}
+    <button class="button print-action" data-print>
+      Checklisten drucken ↗
+    </button>
+    <p class="result-note">
+      Die Auswahl wird nicht gespeichert und nicht übermittelt. Stand 26.
+      Oktober 2026.
+    </p>
+  </section>
+</BaseLayout>

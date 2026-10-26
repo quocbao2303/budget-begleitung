@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Datenschutzeinstellungen" noindex>
+  <header class="page-heading">
+    <p class="eyebrow accent">Lokale Funktionen, unter Ihrer Kontrolle.</p>
+    <h1>Datenschutzeinstellungen</h1>
+  </header>
+  <section class="simple-content prose">
+    <p>
+      In dieser Startfassung gibt es keine Analyse- oder Werbedienste, die Sie
+      ein- oder ausschalten müssten. Ihre Merkliste ist eine lokale Funktion
+      Ihres Browsers. Der Budget-Check speichert seine Pflegeeingaben nicht
+      darin.
+    </p>
+    <p>
+      Hier können Sie die lokale Merkliste leeren und den Informationshinweis
+      erneut anzeigen lassen. Diese Aktionen löschen keine Angaben bei Ihrer
+      Pflegekasse und versenden keine Nachricht an Budget Begleitung.
+    </p>
+    <h2>In diesem Browser</h2>
+    <div class="settings-actions">
+      <button class="button" data-clear-saved>
+        Merkliste leeren
+      </button>
+      <button class="button outline" id="reset-notice">
+        Hinweis erneut anzeigen
+      </button>
+    </div>
+    <h2>Was lokal gespeichert wird</h2>
+    <ul>
+      <li>
+        <strong>Merkliste:</strong> Artikelkennungen, erst wenn Sie einen
+        Beitrag ausdrücklich merken. Gespeichert bis zur Entfernung oder
+        Löschung Ihrer Browserdaten.
+      </li>
+      <li>
+        <strong>Informationshinweis:</strong> Ihr Klick auf „Verstanden“, nur
+        für die aktuelle Browsersitzung.
+      </li>
+      <li>
+        <strong>Budget-Check:</strong> Rechenwerte bleiben ausschließlich im
+        Arbeitsspeicher der geöffneten Seite. Sie werden weder übertragen noch
+        dauerhaft gespeichert.
+      </li>
+    </ul>
+    <p>
+      Mehr zur Verarbeitung und zu Ihren Rechten lesen Sie in der{" "}
+      <a href="/datenschutz/">Datenschutzerklärung</a>.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,30 @@
+{
+  "name": "budget-begleitung",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "check": "astro check",
+    "build": "astro build && pagefind --site dist && node scripts/audit.mjs",
+    "preview": "astro preview --host 0.0.0.0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "fonts": "node scripts/acquire-fonts.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "pagefind": "1.5.2",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "sharp": "0.35.5",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+assets-source/
+artifacts/
+.DS_Store
+playwright-report/
+test-results/
+public/fonts/*.woff2
+docs/
+scripts/northflank.mjs
+scripts/import-content.py

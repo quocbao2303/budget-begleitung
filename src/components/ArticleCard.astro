@@ -1,0 +1,36 @@
+---
+import Art from "./Art.astro";
+import { minutes, pillarName, type Article } from "../lib/content";
+interface Props {
+  article: Article;
+  compact?: boolean;
+  priority?: boolean;
+}
+const { article: a, compact = false, priority = false } = Astro.props;
+---
+
+<article
+  class:list={["article-card", { compact: compact }]}
+  data-article={a.data.id}
+  data-pillar={a.data.pillar}
+  data-format={a.data.format}
+>
+  <a class="card-image" href={a.data.route} tabindex="-1" aria-hidden="true">
+    <Art
+      id={a.data.assetId}
+      priority={priority}
+      sizes="(min-width:1080px) 24vw, (min-width:740px) 45vw, 100vw"
+      decorative
+    />
+  </a>
+  <div class="card-copy">
+    <p class="eyebrow accent">
+      {pillarName(a.data.pillar)} · {a.data.format}
+    </p>
+    <h2>
+      <a href={a.data.route}>{a.data.title}</a>
+    </h2>
+    <p class="card-description">{a.data.description}</p>
+    <p class="reading-time">{minutes(a)} Minuten Lesezeit</p>
+  </div>
+</article>

@@ -1,0 +1,75 @@
+---
+import { pillars } from "../lib/content";
+---
+
+<footer id="footer-navigation" class="site-footer" data-pagefind-ignore>
+  <div class="footer-top">
+    <a class="wordmark" href="/">
+      Budget Begleitung
+    </a>
+    <p>
+      Pflegebegleitung finanzieren.
+      <br />
+      Klar. Clever. Unabhängig.
+    </p>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <p class="eyebrow">Ein bisschen mehr Durchblick.</p>
+      <p>
+        Das unabhängige Magazin für die finanzielle Seite der Pflegebegleitung.
+        Für Entscheidungen, die zu Ihrem Alltag passen.
+      </p>
+    </div>
+    <nav aria-label="Rubriken">
+      {pillars.map((p) => (
+        <a href={`/${p.id}/`}>{p.name}</a>
+      ))}
+    </nav>
+    <nav aria-label="Redaktion">
+      <a href="/ueber-uns/">Über uns</a>
+      <a href="/so-arbeiten-wir/">So arbeiten wir</a>
+      <a href="/kontakt/">Kontakt</a>
+      <a href="/rss.xml">RSS abonnieren</a>
+    </nav>
+    <nav aria-label="Rechtliches">
+      <a href="/impressum/">Impressum</a>
+      <a href="/datenschutz/">Datenschutz</a>
+      <a href="/datenschutz/einstellungen/">Datenschutzeinstellungen</a>
+    </nav>
+  </div>
+  <p class="footer-disclaimer">
+    Budget Begleitung ist ein unabhängiges journalistisches Informationsangebot.
+    Inhalte, Rechenbeispiele und Checklisten dienen der Bildung und
+    Orientierung. Sie ersetzen keine Rechts-, Steuer-, medizinische oder
+    individuelle Pflegeberatung. Es besteht keine Verbindung zu Pflegekassen
+    oder gewerblichen Anbietern.
+  </p>
+  <div class="footer-bottom">
+    <span>© 2026 Budget Begleitung</span>
+    <span>Mit klarem Blick auf das Wesentliche.</span>
+    <span>budget-begleitung.de</span>
+  </div>
+</footer>
+<aside
+  class="privacy-notice"
+  aria-labelledby="privacy-title"
+  hidden
+  data-pagefind-ignore
+>
+  <div>
+    <h2 id="privacy-title">Cookies und lokale Funktionen</h2>
+    <p>
+      Budget Begleitung lädt keine Analyse- oder Werbedienste. Für ausdrücklich
+      genutzte Funktionen, etwa Ihre Merkliste, kann Ihr Browser Angaben lokal
+      speichern. Die Eingaben des Budget-Checks bleiben davon getrennt.
+    </p>
+  </div>
+  <div class="privacy-actions">
+    <a href="/datenschutz/einstellungen/">Einstellungen</a>
+    <a href="/datenschutz/">Datenschutz</a>
+    <button class="button" id="dismiss-privacy">
+      Verstanden
+    </button>
+  </div>
+</aside>

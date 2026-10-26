@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Archive from "../../../components/Archive.astro";
+import { articles } from "../../../lib/content";
+export function getStaticPaths() {
+  return [{ params: { page: "2" } }];
+}
+const all = (await articles()).reverse();
+---
+
+<BaseLayout
+  title="Das Magazin, Seite 2"
+  description="Die Grundlagen der Startausgabe: Entlastungsbetrag, Pflegegeld, Umwandlung und der Pflegebudget-Fahrplan."
+>
+  <header class="page-heading">
+    <p class="eyebrow accent">Die Startausgabe</p>
+    <h1>Die Grundlagen.</h1>
+    <p>Vom ersten Überblick zur nachvollziehbaren Rechnung.</p>
+  </header>
+  <Archive items={all.slice(12)} page={2} total={18} prev="/magazin/" />
+</BaseLayout>

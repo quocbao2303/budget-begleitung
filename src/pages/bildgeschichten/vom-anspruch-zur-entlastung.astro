@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Art from "../../components/Art.astro";
+const scenes = [
+  {
+    title: "Die Aufgabe",
+    text: "Der Anfang ist kein Geldbetrag. Jemand braucht eine konkrete Unterstützung im Alltag. Benennen Sie zuerst die Aufgabe, die übernommen werden soll.",
+    art: "budget-wege-hero",
+  },
+  {
+    title: "Das passende Angebot",
+    text: "Ein Angebot muss zur Aufgabe passen. Wenn es über Pflegeleistungen finanziert werden soll, prüfen Sie außerdem die Voraussetzungen und den vorgesehenen Erstattungsweg.",
+    art: "anerkennung-bruecke",
+  },
+  {
+    title: "Die ganze Rechnung",
+    text: "Zum Stundensatz können weitere vereinbarte Kosten kommen. Erst der vollständige Terminpreis zeigt, welcher Aufwand finanziert werden muss.",
+    art: "antrag-schritte",
+  },
+  {
+    title: "Der Rahmen",
+    text: "Vorhandene Budgets sind keine beliebig addierbaren Töpfe. Ein möglicher Umwandlungsbetrag kann die verbleibende Geldleistung beeinflussen.",
+    art: "toepfe-verbinden",
+  },
+  {
+    title: "Der Nachweis",
+    text: "Die tatsächliche Leistung muss nachvollziehbar bleiben. Sammeln Sie die benötigten Belege und dokumentieren Sie, was eingereicht oder direkt abgerechnet wurde.",
+    art: "antrag-schritte",
+  },
+  {
+    title: "Die Entlastung",
+    text: "Die Organisation ist gelungen, wenn Unterstützung im Alltag ankommt. Die Rechnung gehört dazu. Sie ist nicht der einzige Maßstab dafür, ob die Hilfe passt.",
+    art: "begleitung-alltag",
+  },
+];
+---
+
+<BaseLayout
+  title="Pflegebudget einfach erklärt: vom Anspruch zur Erstattung"
+  description="Sechs visuelle Szenen erklären den Weg vom konkreten Unterstützungsbedarf bis zur tatsächlichen Erstattung."
+  dark
+>
+  <article data-pagefind-body>
+    <header class="story-intro">
+      <Art id="klarer-horizont" priority decorative sizes="100vw" />
+      <div>
+        <p class="eyebrow">Eine Bildgeschichte in sechs Szenen</p>
+        <h1>
+          Vom Anspruch
+          <br />
+          zur Entlastung.
+        </h1>
+        <p>Eine Rechnung nimmt ihren Weg.</p>
+        <a class="text-link" href="#szene-1">
+          Die Geschichte lesen <span>↓</span>
+        </a>
+      </div>
+    </header>
+    {scenes.map((s, i) => (
+      <section class="story-scene" id={`szene-${i + 1}`}>
+        <Art id={s.art} />
+        <div class="story-scene-copy">
+          <p class="eyebrow">{String(i + 1).padStart(2, "0")} / 06</p>
+          <h2>{s.title}</h2>
+          <p>{s.text}</p>
+          {i === 2 && (
+            <p class="result-note">
+              Zeit + vereinbarte Nebenkosten = vollständiger Terminpreis
+            </p>
+          )}
+        </div>
+      </section>
+    ))}
+    <footer class="story-outro">
+      <p class="eyebrow">Und jetzt?</p>
+      <h2>Ein klarer nächster Schritt.</h2>
+      <p>
+        <a href="/budgetieren/pflegebudget-fahrplan/">
+          Den Pflegebudget-Fahrplan lesen
+        </a>
+        <a href="/beantragen/entlastungsbetrag-beantragen/">
+          Die Erstattung vorbereiten
+        </a>
+        <a href="/budget-check/">Zum Budget-Check</a>
+      </p>
+      <p class="result-note">
+        Redaktionelle Prozessdarstellung auf Grundlage der in den verlinkten
+        Magazinbeiträgen erläuterten Regeln. Stand 26. Oktober 2026. Allgemeine
+        Orientierung, keine individuelle Beratung.
+      </p>
+    </footer>
+  </article>
+</BaseLayout>

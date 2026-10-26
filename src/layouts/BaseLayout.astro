@@ -1,0 +1,87 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  image?: string;
+  dark?: boolean;
+  structuredData?: Record<string, unknown>;
+}
+const {
+  title,
+  description = "Das unabhängige Magazin über Pflegebegleitung, Entlastungsbetrag und Pflegebudget. Mit klaren Rechnungen, Anleitungen und einem Budget-Check.",
+  noindex = false,
+  image = "/media/budget-wege-hero-1440.webp",
+  dark = false,
+  structuredData,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, "https://budget-begleitung.de")
+  .href;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#102b32" />
+    <title>{title} | Budget Begleitung</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex,follow" : "index,follow"} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Budget Begleitung"
+      href="/rss.xml"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Zodiak-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ClashGrotesk-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content={structuredData ? "article" : "website"} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Budget Begleitung" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta
+      property="og:image"
+      content={new URL(image, "https://budget-begleitung.de").href}
+    />
+    {structuredData && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")}
+      />
+    )}
+  </head>
+  <body class:list={[{ "dark-page": dark }]}>
+    <a class="skip-link" href="#main">
+      Zum Inhalt
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <div class="sr-only" id="global-status" role="status"></div>
+    <script>
+      import "../scripts/global";
+    </script>
+  </body>
+</html>

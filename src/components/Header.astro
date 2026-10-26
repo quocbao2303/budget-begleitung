@@ -1,0 +1,162 @@
+---
+import Icon from "./Icon.astro";
+import { pillars } from "../lib/content";
+---
+
+<header class="site-header" data-pagefind-ignore>
+  <div class="utility-strip">
+    <a href="/budgetieren/pflegebudget-fahrplan/">
+      Der Pflegebudget-Fahrplan: Hier anfangen <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+  <div class="masthead-row">
+    <nav aria-label="Magazin">
+      <a href="/magazin/">Magazin</a>
+      <a href="/budget-check/">Budget-Check</a>
+      <a href="/checklisten/">Checklisten</a>
+    </nav>
+    <a class="wordmark" href="/" aria-label="Budget Begleitung, Startseite">
+      Budget Begleitung
+    </a>
+    <div class="header-actions">
+      <a
+        class="icon-button saved-trigger"
+        href="/merkliste/"
+        data-open="saved-dialog"
+        aria-label="Merkliste öffnen"
+      >
+        <Icon name="bookmark" />
+      </a>
+      <a
+        class="icon-button search-trigger"
+        href="/suche/"
+        data-open="search-dialog"
+        aria-label="Suche öffnen"
+      >
+        <Icon name="search" />
+      </a>
+      <a
+        class="icon-button menu-trigger"
+        href="#footer-navigation"
+        data-open="menu-dialog"
+        aria-label="Menü öffnen"
+      >
+        <Icon name="menu" />
+      </a>
+    </div>
+  </div>
+  <nav class="topic-nav" aria-label="Themen">
+    {pillars.map((p) => (
+      <a href={`/${p.id}/`}>{p.name}</a>
+    ))}
+    <a href="/anbieter-check/">Anbieter-Check</a>
+    <a href="/bildgeschichten/">Bildgeschichten</a>
+    <a href="/reform-ticker/">Reform-Ticker</a>
+  </nav>
+</header>
+<dialog id="menu-dialog" class="menu-dialog" aria-labelledby="menu-title">
+  <div class="dialog-masthead">
+    <a href="/" class="wordmark">
+      Budget Begleitung
+    </a>
+    <button class="icon-button" data-close aria-label="Menü schließen">
+      <Icon name="close" />
+    </button>
+  </div>
+  <div class="menu-columns">
+    <nav aria-labelledby="menu-title">
+      <h2 id="menu-title" class="sr-only">
+        Alle Themen
+      </h2>
+      {pillars.map((p) => (
+        <a href={`/${p.id}/`}>{p.name}</a>
+      ))}
+    </nav>
+    <nav aria-label="Werkzeuge und Magazin">
+      <a href="/magazin/">Das Magazin</a>
+      <a href="/budget-check/">Der Budget-Check</a>
+      <a href="/anbieter-check/">Anbieter-Check</a>
+      <a href="/checklisten/">Checklisten</a>
+      <a href="/bildgeschichten/">Bildgeschichten</a>
+      <a href="/reform-ticker/">Reform-Ticker</a>
+      <a href="/merkliste/">Ihre Merkliste</a>
+    </nav>
+    <div>
+      <p class="eyebrow">Klar. Clever. Unabhängig.</p>
+      <p>
+        Die finanzielle Seite der Pflegebegleitung. Mit klaren Rechnungen und
+        einem Blick für Ihren Alltag.
+      </p>
+      <a href="/ueber-uns/">Über die Redaktion ↗</a>
+      <a href="/kontakt/">Kontakt ↗</a>
+      <div class="menu-legal">
+        <a href="/impressum/">Impressum</a>
+        <a href="/datenschutz/">Datenschutz</a>
+        <a href="/datenschutz/einstellungen/">Datenschutzeinstellungen</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+<dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title">
+  <div class="dialog-masthead">
+    <a href="/" class="wordmark">
+      Budget Begleitung
+    </a>
+    <button class="icon-button" data-close aria-label="Suche schließen">
+      <Icon name="close" />
+    </button>
+  </div>
+  <section class="search-panel">
+    <h2 id="search-title" class="eyebrow">
+      Was möchten Sie verstehen?
+    </h2>
+    <div data-search>
+      <label class="sr-only" for="overlay-query">
+        Magazin durchsuchen
+      </label>
+      <div class="search-field">
+        <input
+          id="overlay-query"
+          type="search"
+          placeholder="Ich möchte mehr wissen über …"
+          autocomplete="off"
+        />
+        <Icon name="search" />
+      </div>
+      <p class="search-status" aria-live="polite"></p>
+      <div class="search-results"></div>
+      <div class="search-suggestions">
+        <p class="eyebrow">Ein guter Anfang</p>
+        <a href="/budgetieren/entlastungsbetrag/">Entlastungsbetrag</a>
+        <span> / </span>
+        <a href="/budgetieren/umwandlungsanspruch/">Umwandlung</a>
+        <span> / </span>
+        <a href="/beantragen/anerkennung-anbieter-pruefen/">Anerkennung</a>
+        <span> / </span>
+        <a href="/beobachten/">Pflegereform</a>
+      </div>
+    </div>
+  </section>
+</dialog>
+<dialog id="saved-dialog" class="saved-dialog" aria-labelledby="saved-title">
+  <button
+    class="icon-button saved-close"
+    data-close
+    aria-label="Merkliste schließen"
+  >
+    <Icon name="close" />
+  </button>
+  <h2 id="saved-title" class="eyebrow">
+    Ihre Merkliste
+  </h2>
+  <div data-saved-summary>
+    <p class="saved-heading">Gutes für später.</p>
+    <p>
+      Merken Sie sich Beiträge mit dem Lesezeichen am Artikel. Ihre Auswahl
+      bleibt in diesem Browser.
+    </p>
+  </div>
+  <a class="button" href="/merkliste/">
+    Merkliste ansehen <span>↗</span>
+  </a>
+</dialog>

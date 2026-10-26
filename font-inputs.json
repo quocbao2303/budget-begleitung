@@ -1,0 +1,20 @@
+[
+  {
+    "family": "zodiak",
+    "name": "Zodiak-VariableItalic.woff2",
+    "archivePath": "Zodiak_Complete/Fonts/WEB/fonts/Zodiak-VariableItalic.woff2",
+    "sha256": "068afb4b6c5ae11e0776e67e96417bab9a79ae6d984e2843389dbd527b895651"
+  },
+  {
+    "family": "zodiak",
+    "name": "Zodiak-Variable.woff2",
+    "archivePath": "Zodiak_Complete/Fonts/WEB/fonts/Zodiak-Variable.woff2",
+    "sha256": "fbc0b605217b43e22005ec128d5939a3334efc3eef24f13830fa5bf2fcd13a68"
+  },
+  {
+    "family": "clash-grotesk",
+    "name": "ClashGrotesk-Variable.woff2",
+    "archivePath": "ClashGrotesk_Complete/Fonts/WEB/fonts/ClashGrotesk-Variable.woff2",
+    "sha256": "dc4701a7ee3ed1044033e53e60dd3a9e40b2a4a75244c6958693d900a340aba6"
+  }
+]

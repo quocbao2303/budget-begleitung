@@ -1,0 +1,61 @@
+{
+  "rulesetId": "de-home-care-2026-10-26",
+  "effectiveFrom": "2025-01-01",
+  "effectiveTo": null,
+  "checkedAt": "2026-10-26",
+  "reviewDue": "2026-11-26",
+  "reviewOwner": "Redaktion Budget Begleitung, Budgetieren",
+  "status": "current-law",
+  "jurisdiction": "DE",
+  "currency": "EUR",
+  "amountsIn": "integer euro cents",
+  "scope": "Vereinfachter voller Kalendermonat in häuslicher Pflege. Anerkannte, geeignete und tatsächlich entstandene Kosten; kein Sonderzeitraum, keine individuelle Anspruchsentscheidung.",
+  "monthlyEntlastungsbetrag": 13100,
+  "sachleistung": { "1": 0, "2": 79600, "3": 149700, "4": 185900, "5": 229900 },
+  "pflegegeld": { "1": 0, "2": 34700, "3": 59900, "4": 80000, "5": 99000 },
+  "conversionMaxPercent": 40,
+  "conversionMinPflegegrad": 2,
+  "sourceIds": ["S01", "S02", "S03", "S04", "S05", "S07"],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "SGB XI §45b",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__45b.html"
+    },
+    {
+      "id": "S02",
+      "title": "SGB XI §45a Absatz 4",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__45a.html"
+    },
+    {
+      "id": "S03",
+      "title": "SGB XI §36 Absatz 3",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__36.html"
+    },
+    {
+      "id": "S04",
+      "title": "SGB XI §37 Absatz 1",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__37.html"
+    },
+    {
+      "id": "S05",
+      "title": "SGB XI §38",
+      "url": "https://www.gesetze-im-internet.de/sgb_11/__38.html"
+    },
+    {
+      "id": "S07",
+      "title": "BMG: Weitere Leistungen und Angebote zur Unterstützung im Alltag",
+      "url": "https://www.bundesgesundheitsministerium.de/pflege-zu-hause/weitere-leistungen-und-angebote-zur-unterstuetzung-im-alltag"
+    }
+  ],
+  "allocation": "E zuerst, dann C auf verbleibende geeignete Kosten. Redaktionelle Standardzuordnung, keine behauptete gesetzliche Reihenfolge zwischen E und C.",
+  "limitations": [
+    "Sachleistungen nach §36 sind vorrangig vor der Umwandlung abzurechnen.",
+    "C ist begrenzt auf 40 Prozent von S, ungenutzte Monatskapazität, gewünschte Umwandlung und noch nicht zugeordnete geeignete Kosten.",
+    "C zählt bei der Kombinationsleistung als genutzte Sachleistung und kann Pflegegeld mindern oder verrechnet werden.",
+    "Verfügbarer Entlastungsbetrag muss bekannt oder ausdrücklich als Szenario gewählt sein. Leer ist unbekannt, nicht automatisch 131 Euro.",
+    "Kein doppelter Kostenersatz, keine automatische Übertragung ungenutzter Umwandlungsbeträge.",
+    "Restbeträge aus dem Entlastungsbetrag können nach geltendem Recht in das folgende Kalenderhalbjahr übertragen werden; Herkunft und Verfall separat prüfen.",
+    "Keine PNOG-Entwurfswerte im aktuellen Datensatz."
+  ]
+}

@@ -1,0 +1,194 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Art from "../../components/Art.astro";
+import Icon from "../../components/Icon.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import {
+  articles,
+  authors,
+  minutes,
+  pillarName,
+  date,
+} from "../../lib/content";
+export async function getStaticPaths() {
+  return (await articles()).map((article) => ({
+    params: { pillar: article.data.pillar, slug: article.data.slug },
+    props: { article },
+  }));
+}
+const { article: a } = Astro.props;
+const { Content, headings } = await render(a);
+const author = authors[a.data.author];
+const all = await articles();
+const related = a.data.related
+  .map((id) => all.find((x) => x.data.id === id)!)
+  .filter(Boolean);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: a.data.title,
+  description: a.data.description,
+  image: `https://budget-begleitung.de/media/${a.data.assetId}-1440.webp`,
+  datePublished: a.data.datePublished,
+  dateModified: a.data.factsCheckedAt,
+  author: {
+    "@type": "Person",
+    name: author.name,
+    url: "https://budget-begleitung.de/ueber-uns/#" + a.data.author,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Budget Begleitung",
+    url: "https://budget-begleitung.de",
+  },
+  mainEntityOfPage: "https://budget-begleitung.de" + a.data.route,
+  inLanguage: "de-DE",
+};
+---
+
+<BaseLayout
+  title={a.data.seoTitle}
+  description={a.data.description}
+  image={`/media/${a.data.assetId}-1440.webp`}
+  structuredData={structuredData}
+>
+  <article data-pagefind-body>
+    <header class="article-hero" id="article-intro">
+      <Art id={a.data.assetId} priority sizes="100vw" decorative />
+      <div class="article-heading">
+        <p class="eyebrow">
+          <a href={`/${a.data.pillar}/`}>{pillarName(a.data.pillar)}</a> ·{" "}
+          {a.data.format}
+        </p>
+        <h1 data-pagefind-meta="title">{a.data.title.replace('Umwandlungsanspruch','Umwandlungs\u00adanspruch').replace('Abtretungserklärung','Abtretungs\u00aderklärung').replace('Entlastungsbetrag','Entlastungs\u00adbetrag')}</h1>
+        <p data-pagefind-meta="description">{a.data.description}</p>
+        <div class="article-meta">
+          <span>
+            Von <a href={`/ueber-uns/#${a.data.author}`}>{author.name}</a>
+          </span>
+          <span>{minutes(a)} Minuten Lesezeit</span>
+          <span>Ausgabe {date(a.data.editorialDate)}</span>
+        </div>
+        {a.data.status === "Regierungsentwurf" && (
+          <p class="status-tag">Regierungsentwurf · Stand 26.10.2026</p>
+        )}
+      </div>
+    </header>
+    <div class="reading-layout">
+      <aside class="article-aside" data-pagefind-ignore>
+        <div class="article-aside-inner">
+          <img
+            class="author-photo"
+            src={`/media/authors/${a.data.author}.webp`}
+            alt=""
+            width="64"
+            height="64"
+            loading="lazy"
+          />
+          <p class="eyebrow">Geschrieben von</p>
+          <p class="author-name">{author.name}</p>
+          <p>{author.role}</p>
+          <p>
+            Fachlicher Stand:
+            <br />
+            {date(a.data.factsCheckedAt)}
+          </p>
+          <p>
+            Online seit {date(a.data.datePublished)}.<br />
+            Das Ausgabedatum ist redaktionell zugeordnet.
+          </p>
+          <div>
+            <button
+              class="icon-button"
+              data-save={a.data.id}
+              aria-label="Artikel merken"
+              aria-pressed="false"
+            >
+              <Icon name="bookmark" />
+            </button>
+            <button class="icon-button" data-print aria-label="Artikel drucken">
+              <Icon name="print" />
+            </button>
+            <button
+              class="icon-button"
+              data-copy
+              aria-label="Artikellink kopieren"
+            >
+              <Icon name="copy" />
+            </button>
+          </div>
+          <details class="toc" open>
+            <summary>In diesem Beitrag</summary>
+            <ol>
+              {headings
+                .filter((h) => h.depth === 2)
+                .map((h) => (
+                  <li>
+                    <a href={`#${h.slug}`}>{h.text}</a>
+                  </li>
+                ))}
+            </ol>
+          </details>
+        </div>
+      </aside>
+      <div class="prose" id="article-body">
+        <Content />
+        <div class="article-end">
+          <p>
+            Allgemeine Information und Orientierung, keine individuelle Rechts-,
+            Steuer-, medizinische oder Pflegeberatung.
+          </p>
+          <a href="/so-arbeiten-wir/">
+            Quellen, Datierung und redaktionelle Arbeitsweise
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+  <div class="reading-bar" data-pagefind-ignore>
+    <p class="bar-title">{a.data.title}</p>
+    <div class="bar-actions">
+      <button class="icon-button" data-copy aria-label="Link kopieren">
+        <Icon name="copy" />
+      </button>
+      <button class="icon-button" data-print aria-label="Drucken">
+        <Icon name="print" />
+      </button>
+      <button
+        class="icon-button"
+        data-save={a.data.id}
+        aria-label="Artikel merken"
+        aria-pressed="false"
+      >
+        <Icon name="bookmark" />
+      </button>
+      <button
+        class="icon-button"
+        data-open="menu-dialog"
+        aria-label="Menü öffnen"
+      >
+        <Icon name="menu" />
+      </button>
+    </div>
+    <div
+      class="reading-progress"
+      role="progressbar"
+      aria-label="Lesefortschritt"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+    ></div>
+  </div>
+  <section class="container article-related" data-pagefind-ignore>
+    <div class="section-heading">
+      <h2>Ein sinnvoller nächster Schritt</h2>
+      <a href="/magazin/">Zum Magazin ↗</a>
+    </div>
+    <div class="card-grid">
+      {related.map((article) => (
+        <ArticleCard article={article} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

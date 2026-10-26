@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { pillars, articles } from "../lib/content";
+const all = await articles();
+---
+
+<BaseLayout title="Suche im Magazin" noindex>
+  <header class="page-heading">
+    <p class="eyebrow accent">Die passende Erklärung finden</p>
+    <h1>Was möchten Sie verstehen?</h1>
+  </header>
+  <section class="simple-content">
+    <div data-search>
+      <label class="eyebrow" for="page-query">
+        Magazin durchsuchen
+      </label>
+      <div class="search-field">
+        <input
+          id="page-query"
+          type="search"
+          placeholder="Zum Beispiel: Entlastungsbetrag"
+          autocomplete="off"
+        />
+      </div>
+      <p class="search-status" aria-live="polite"></p>
+      <div class="search-results"></div>
+    </div>
+    <noscript>
+      <p class="no-js-warning">
+        Die Stichwortsuche benötigt JavaScript. Alle Beiträge finden Sie auch
+        direkt hier.
+      </p>
+    </noscript>
+    <div class="prose">
+      <h2>Oder beginnen Sie mit einem Thema.</h2>
+      <ul>
+        {pillars.map((p) => (
+          <li>
+            <a href={`/${p.id}/`}>
+              {p.name}: {p.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <details>
+        <summary>Alle 18 Beiträge der Startausgabe</summary>
+        <ul>
+          {all.map((a) => (
+            <li>
+              <a href={a.data.route}>{a.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </div>
+  </section>
+</BaseLayout>

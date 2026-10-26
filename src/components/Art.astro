@@ -1,0 +1,31 @@
+---
+import { imageAlt } from "../lib/content";
+interface Props {
+  id: string;
+  priority?: boolean;
+  class?: string;
+  sizes?: string;
+  decorative?: boolean;
+}
+const {
+  id,
+  priority = false,
+  class: cls = "",
+  sizes = "(min-width:1080px) 45vw, 100vw",
+  decorative = false,
+} = Astro.props;
+const portrait = id === "budget-wege-hero";
+---
+
+<img
+  class={cls}
+  src={`/media/${id}-960.webp`}
+  srcset={`/media/${id}-480.webp 480w, /media/${id}-960.webp 960w, /media/${id}-1440.webp 1440w`}
+  sizes={sizes}
+  width={portrait ? 1024 : 1536}
+  height={portrait ? 1536 : 1024}
+  alt={decorative ? "" : imageAlt[id]}
+  loading={priority ? "eager" : "lazy"}
+  fetchpriority={priority ? "high" : "auto"}
+  decoding="async"
+/>

@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Art from "../components/Art.astro";
+const questions = [
+  "Welche konkrete Aufgabe wird übernommen, und was gehört ausdrücklich nicht dazu?",
+  "Wer ist Vertragspartner, und wer kommt tatsächlich zum Einsatz?",
+  "Wie lässt sich die Anerkennung des vorgesehenen Angebots überprüfen?",
+  "Wie lang ist der kleinste Termin, und wie wird Zeit abgerechnet?",
+  "Welche Fahrtkosten, Zuschläge und Ausfallkosten können entstehen?",
+  "Wie hoch wäre eine vollständige Beispielrechnung für unseren Rhythmus?",
+  "Welche Kosten sollen aus welchem vorhandenen Budget erstattet werden?",
+  "Brauchen wir eine Abtretung, und welche Ansprüche umfasst sie genau?",
+  "Bekommen wir Leistungsnachweise und Rechnungskopien?",
+  "Wie werden Vertretung, Rückfragen und eine Beendigung der Vereinbarung geregelt?",
+];
+---
+
+<BaseLayout
+  title="Anbieter-Check: Alltagsbegleitung vor dem Vertrag prüfen"
+  description="Zehn druckbare Fragen zu Anerkennung, Kosten, Leistung und Abrechnung. Prüfen Sie ein Angebot, bevor Sie es vereinbaren."
+>
+  <header class="page-heading" data-pagefind-body>
+    <p class="eyebrow accent">Gute Fragen vor dem ersten Termin.</p>
+    <h1>
+      Passt das Angebot?
+      <br />
+      Ihr Anbieter-Check
+    </h1>
+    <p>
+      Ein Angebot lässt sich besser beurteilen, wenn die offenen Fragen auf
+      einem Blatt stehen. Diese Liste hilft bei Anerkennung, Preis, Leistung und
+      Abrechnung. Sie ist keine Anbieterbewertung und keine Empfehlung eines
+      bestimmten Dienstes.
+    </p>
+  </header>
+  <section class="simple-content prose" data-pagefind-body>
+    <Art id="anerkennung-bruecke" class="simple-art" />
+    <h2>Zehn Fragen für Ihr Gespräch</h2>
+    <p>
+      Markieren Sie geklärte Punkte. Die Auswahl bleibt nur in dieser Ansicht
+      und wird nicht gesendet oder gespeichert.
+    </p>
+    <ul class="checklist">
+      {questions.map((q, i) => (
+        <li>
+          <input id={`provider-${i}`} type="checkbox" />
+          <label for={`provider-${i}`}>{q}</label>
+        </li>
+      ))}
+    </ul>
+    <button class="button print-action" data-print>
+      Die Checkliste ausdrucken ↗
+    </button>
+    <p>
+      Eine leere Antwort ist ein Grund zum Nachfragen, keine Aufforderung, das
+      fehlende Wissen selbst zu erraten. Bewahren Sie die geklärten Angaben
+      zusammen mit dem Angebot auf.
+    </p>
+    <h2>Die Hintergründe</h2>
+    <ul>
+      <li>
+        <a href="/begleiten/alltagsbegleitung-kosten/">
+          Den vollständigen Terminpreis rechnen
+        </a>
+      </li>
+      <li>
+        <a href="/beantragen/anerkennung-anbieter-pruefen/">
+          Die Anerkennung prüfen
+        </a>
+      </li>
+      <li>
+        <a href="/beantragen/abtretungserklaerung/">Eine Abtretung verstehen</a>
+      </li>
+    </ul>
+    <p class="result-note">
+      Redaktionelle Prüfliste, Stand 26. Oktober 2026. Allgemeine Orientierung,
+      keine individuelle Vertragsprüfung.
+    </p>
+  </section>
+</BaseLayout>

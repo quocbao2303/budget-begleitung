@@ -1,0 +1,82 @@
+---
+import ArticleCard from "./ArticleCard.astro";
+import { pillars, type Article } from "../lib/content";
+interface Props {
+  items: Article[];
+  all?: Article[];
+  page?: number;
+  total?: number;
+  next?: string;
+  prev?: string;
+  filters?: boolean;
+}
+const {
+  items,
+  all = items,
+  page = 1,
+  total = items.length,
+  next,
+  prev,
+  filters = false,
+} = Astro.props;
+---
+
+<div class="container archive">
+  {filters && (
+    <div class="archive-toolbar">
+      <div class="archive-filter">
+        <label for="pillar-filter">Nach Thema</label>
+        <select id="pillar-filter" data-filter="pillar">
+          <option value="">Alle Themen</option>
+          {pillars.map((p) => (
+            <option value={p.id}>{p.name}</option>
+          ))}
+        </select>
+      </div>
+      <div class="archive-filter">
+        <label for="format-filter">Nach Format</label>
+        <select id="format-filter" data-filter="format">
+          <option value="">Alle Formate</option>
+          {[...new Set(all.map((a) => a.data.format))].sort().map((f) => (
+            <option value={f}>{f}</option>
+          ))}
+        </select>
+      </div>
+      <span class="eyebrow" data-count>
+        {total} Beiträge
+      </span>
+    </div>
+  )}
+  <div class="card-grid" data-archive-grid>
+    {items.map((article, i) => (
+      <ArticleCard article={article} priority={i < 2} />
+    ))}
+  </div>
+  <p class="search-status" data-archive-status aria-live="polite"></p>
+  {(next || prev) && (
+    <nav class="pagination" aria-label="Magazinseiten">
+      {prev && <a href={prev}>← Vorherige Seite</a>}
+      <span class="eyebrow">Seite {page} von 2</span>
+      {next && (
+        <a class="button" href={next} data-load-more>
+          Weitere Beiträge <span>↓</span>
+        </a>
+      )}
+    </nav>
+  )}
+  {filters && (
+    <script
+      type="application/json"
+      id="archive-items"
+      set:html={JSON.stringify(
+        all.map((a) => ({
+          ...a.data,
+          minutes: Math.max(
+            2,
+            Math.ceil((a.body || "").split(/\s+/).length / 190),
+          ),
+        })),
+      ).replace(/</g, "\\u003c")}
+    />
+  )}
+</div>

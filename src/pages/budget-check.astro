@@ -1,0 +1,312 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { rules, euro } from "../lib/budget";
+---
+
+<BaseLayout
+  title="Budget-Check: Begleitung und Pflegegeld zusammen rechnen"
+  description="Ein transparenter Rechner für Entlastungsbetrag, Umwandlung und verbleibendes Pflegegeld. Alle Eingaben bleiben lokal im Browser."
+>
+  <header class="page-heading" data-pagefind-body>
+    <p class="eyebrow accent">Weniger Rätsel. Mehr Überblick.</p>
+    <h1>Der Budget-Check</h1>
+    <p>
+      Was kann für Alltagsbegleitung zur Verfügung stehen, und welche Wirkung
+      hat eine Umwandlung auf das Pflegegeld? Wir zeigen die Rechenschritte für
+      einen vereinfachten vollen Monat in häuslicher Pflege.
+    </p>
+  </header>
+  <div class="container calculator-layout">
+    <div>
+      <p class="result-note">
+        Ihre Eingaben bleiben in diesem Browserfenster. Sie werden nicht
+        übermittelt und nicht gespeichert. Wir benötigen keinen Namen und keine
+        Unterlagen.
+      </p>
+      <button class="text-link" id="budget-example" type="button">
+        Beispiel: Pflegegrad 3 öffnen <span>↗</span>
+      </button>
+      <form id="budget-form" class="budget-form" novalidate>
+        <div class="field">
+          <label for="grade">
+            <span class="form-number">01 / </span> Welcher Pflegegrad ist
+            festgestellt?
+          </label>
+          <select id="grade" name="grade">
+            <option value="">Noch nicht geklärt</option>
+            <option value="1">Pflegegrad 1</option>
+            <option value="2">Pflegegrad 2</option>
+            <option value="3">Pflegegrad 3</option>
+            <option value="4">Pflegegrad 4</option>
+            <option value="5">Pflegegrad 5</option>
+          </select>
+        </div>
+        <label class="field-checkbox">
+          <input name="home" type="checkbox" />
+          Die betrachtete Person wird zu Hause versorgt. Es geht um einen vollen
+          Monat ohne Sonderzeitraum.
+        </label>
+        <label class="field-checkbox">
+          <input name="recognized" type="checkbox" />
+          Die geplanten Kosten sind geeignet und das konkrete Angebot ist nach
+          den geltenden Regeln anerkannt.
+        </label>
+        <p class="result-note">
+          Noch unsicher? Prüfen Sie zuerst die{" "}
+          <a href="/beantragen/anerkennung-anbieter-pruefen/">Anerkennung</a>.
+          Das Modell kann darüber nicht entscheiden.
+        </p>
+        <div class="field">
+          <label for="used">
+            <span class="form-number">02 / </span> Bereits beanspruchte
+            ambulante Sachleistungen
+          </label>
+          <input
+            type="text"
+            inputmode="decimal"
+            id="used"
+            name="used"
+            value="0"
+            aria-describedby="used-help"
+          />
+          <small id="used-help">
+            Für diesen Monat, in Euro. Bereits gebundene Leistungen werden
+            zuerst berücksichtigt.
+          </small>
+        </div>
+        <div class="field">
+          <label for="expenses">
+            <span class="form-number">03 / </span> Geeignete tatsächliche Kosten
+            der Alltagsbegleitung
+          </label>
+          <input
+            type="text"
+            inputmode="decimal"
+            id="expenses"
+            name="expenses"
+            placeholder="Betrag in Euro"
+          />
+          <small>
+            Nur passende und tatsächlich angefallene beziehungsweise
+            ausdrücklich angenommene Kosten.
+          </small>
+        </div>
+        <div class="field">
+          <label for="entlastung">
+            <span class="form-number">04 / </span> Noch verfügbarer
+            Entlastungsbetrag des laufenden Jahres
+          </label>
+          <input
+            type="text"
+            inputmode="decimal"
+            id="entlastung"
+            name="entlastung"
+            placeholder="Bekannter Rest in Euro"
+          />
+          <small>
+            Leer bedeutet unbekannt. Wir setzen nicht automatisch 131 Euro ein.
+            Der aktuelle Monatsbetrag kann bereits verbraucht sein.
+          </small>
+        </div>
+        <div class="field">
+          <label for="carryover">
+            Bestätigter übertragener Rest aus dem Vorjahr
+          </label>
+          <input
+            type="text"
+            inputmode="decimal"
+            id="carryover"
+            name="carryover"
+            value="0"
+          />
+          <small>
+            Nur bestätigte, noch verwendbare Altmittel. Herkunft und Frist
+            separat prüfen.
+          </small>
+        </div>
+        <div class="field">
+          <label for="conversion">
+            <span class="form-number">05 / </span> Gewünschte Umwandlung
+          </label>
+          <input
+            type="text"
+            inputmode="decimal"
+            id="conversion"
+            name="conversion"
+            value="0"
+          />
+          <small>
+            In Euro. Die Rechnung begrenzt den Betrag auf zulässige Kapazität
+            und noch nicht zugeordnete Kosten.
+          </small>
+        </div>
+        <p id="pg1-note" class="result-note" hidden>
+          Bei Pflegegrad 1 wird hier keine Umwandlung aus einem
+          Sachleistungsbudget berechnet.
+        </p>
+        <p
+          id="budget-error"
+          class="error-message"
+          role="alert"
+          tabindex="-1"
+        ></p>
+        <div class="form-actions">
+          <button class="button" type="submit">
+            Neu berechnen <span>↗</span>
+          </button>
+          <button class="button outline" type="reset">
+            Eingaben zurücksetzen
+          </button>
+        </div>
+      </form>
+    </div>
+    <aside class="budget-results" aria-labelledby="budget-results-title">
+      <p class="eyebrow accent">Die Rechnung, offen gelegt.</p>
+      <h2 id="budget-results-title" tabindex="-1">
+        Passender Erstattungsrahmen
+      </h2>
+      <div id="budget-empty">
+        <p>
+          Tragen Sie Ihre geklärten Werte ein oder öffnen Sie das ausdrücklich
+          angenommene Beispiel.
+        </p>
+        <p class="result-note">
+          Ein Budget ist ein Rahmen. Erst geeignete tatsächliche Kosten machen
+          daraus eine mögliche Erstattung.
+        </p>
+      </div>
+      <div id="budget-result" hidden aria-live="polite">
+        <p class="result-amount" data-result="total"></p>
+        <p class="eyebrow">
+          Pflegegrad <span data-result="grade"></span> · voller Monat
+        </p>
+        <table class="result-table">
+          <caption class="sr-only">
+            Aufteilung der geeigneten Kosten und Pflegegeldwirkung
+          </caption>
+          <tbody>
+            <tr>
+              <th>Geeignete Kosten</th>
+              <td data-result="expenses"></td>
+            </tr>
+            <tr>
+              <th>Entlastungsbetrag, laufendes Jahr</th>
+              <td data-result="eCurrent"></td>
+            </tr>
+            <tr>
+              <th>Davon bestätigter Vorjahresrest</th>
+              <td data-result="eCarry"></td>
+            </tr>
+            <tr>
+              <th>Davon Umwandlung</th>
+              <td data-result="conversion"></td>
+            </tr>
+            <tr>
+              <th>Möglicher selbst zu zahlender Betrag</th>
+              <td data-result="self"></td>
+            </tr>
+            <tr>
+              <th>Bereits genutzte Sachleistungen</th>
+              <td data-result="used"></td>
+            </tr>
+            <tr>
+              <th>Verbleibender Pflegegeldanteil</th>
+              <td>
+                <span data-result="remaining"></span>
+                <br />
+                <span data-result="percent"></span>
+              </td>
+            </tr>
+            <tr>
+              <th>Pflegegeldminderung durch Umwandlung</th>
+              <td data-result="reduction"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="allocation-diagram" aria-hidden="true">
+          <span class="e"></span>
+          <span class="c"></span>
+          <span class="self"></span>
+        </div>
+        <div class="diagram-legend" aria-hidden="true">
+          <span>Entlastungsbetrag</span>
+          <span>Umwandlung</span>
+          <span>Eigenanteil</span>
+        </div>
+        <p class="result-note">
+          Die Umwandlungsobergrenze vor Kostenbegrenzung beträgt hier{" "}
+          <strong data-result="max"></strong>. Der tatsächlich zugeordnete
+          Betrag kann kleiner sein.
+        </p>
+        <p class="result-note">
+          Standardzuordnung dieses Modells: erst Entlastungsbetrag, dann
+          Umwandlung auf die verbleibenden Kosten. Das ist keine gesetzlich
+          vorgeschriebene Reihenfolge. Keine Ausgabe wird doppelt erstattet.
+        </p>
+        <button class="button outline" data-print>
+          Rechnung drucken
+        </button>
+      </div>
+      <p class="result-note">
+        Geprüfter Datensatz: <span id="rules-date">26. Oktober 2026</span>. SGB
+        XI §§ 36, 37, 38, 45a und 45b.
+      </p>
+      <p class="result-note">
+        Die Rechnung berücksichtigt einen vereinfachten vollen Monat.
+        Anerkennung, tatsächliche Aufwendungen und weitere Voraussetzungen
+        müssen passen. Umwandlungsbeträge zählen bei der Kombinationsleistung
+        als genutzte Sachleistung. Ein hoher Rahmen ist kein zusätzlicher frei
+        verfügbarer Geldbetrag.
+      </p>
+    </aside>
+  </div>
+  <noscript>
+    <p class="no-js-warning">
+      Für die interaktive Berechnung benötigen Sie JavaScript. Die
+      Regelübersicht und Rechenartikel bleiben vollständig lesbar.
+    </p>
+  </noscript>
+  <section class="rules-overview" data-pagefind-body>
+    <table>
+      <caption>Die monatlichen Grundlagen</caption>
+      <thead>
+        <tr>
+          <th>Pflegegrad</th>
+          <th>Sachleistung</th>
+          <th>Pflegegeld</th>
+          <th>Entlastungsbetrag</th>
+        </tr>
+      </thead>
+      <tbody>
+        {[1, 2, 3, 4, 5].map((n) => {
+          const k = String(n) as keyof typeof rules.sachleistung;
+          return (
+            <tr>
+              <th>{n}</th>
+              <td>{euro(rules.sachleistung[k])}</td>
+              <td>{euro(rules.pflegegeld[k])}</td>
+              <td>{euro(rules.monthlyEntlastungsbetrag)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+    <p class="result-note">
+      Stand 26.10.2026. Höchstbeträge unter Voraussetzungen. Pflegegrad 1 hat in
+      diesem Modell keinen Umwandlungsanspruch und kein Pflegegeld.
+      Vorgeschlagene PNOG-Leistungen werden nicht eingerechnet.
+    </p>
+    <p class="result-note">
+      Weiterlesen:{" "}
+      <a href="/budgetieren/entlastungsbetrag/">Entlastungsbetrag</a>,{" "}
+      <a href="/budgetieren/umwandlungsanspruch/">Umwandlung</a>,{" "}
+      <a href="/budgetieren/pflegegeld-sachleistung-kombinieren/">
+        Kombinationsleistung
+      </a>
+      .
+    </p>
+  </section>
+  <script>
+    import "../scripts/budget";
+  </script>
+</BaseLayout>

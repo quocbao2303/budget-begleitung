@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Archive from "../../components/Archive.astro";
+import { articles, pillars } from "../../lib/content";
+export function getStaticPaths() {
+  return pillars.map((p) => ({
+    params: { pillar: p.id },
+    props: { pillar: p },
+  }));
+}
+const { pillar: p } = Astro.props;
+const items = (await articles()).filter((a) => a.data.pillar === p.id);
+---
+
+<BaseLayout title={`${p.name}: ${p.title}`} description={p.intro}>
+  <header class="page-heading" data-pagefind-body>
+    <p class="eyebrow accent">Die vier Perspektiven · {p.name}</p>
+    <h1>{p.title}</h1>
+    <p>{p.intro}</p>
+  </header>
+  <Archive items={items} />
+  <div class="container">
+    <div class="tool-invitation">
+      <p class="eyebrow accent">Vom Lesen zum Sortieren</p>
+      <h2>
+        {p.id === "beobachten"
+          ? "Ein Entwurf ist noch kein Anspruch."
+          : "Der nächste Schritt darf klein sein."}
+      </h2>
+      <a
+        class="text-link"
+        href={
+          p.id === "beobachten"
+            ? "/reform-ticker/"
+            : p.id === "begleiten"
+              ? "/anbieter-check/"
+              : "/budget-check/"
+        }
+      >
+        {p.id === "beobachten"
+          ? "Zum Reform-Ticker"
+          : p.id === "begleiten"
+            ? "Zum Anbieter-Check"
+            : "Zum Budget-Check"}{" "}
+        <span>↗</span>
+      </a>
+    </div>
+  </div>
+</BaseLayout>

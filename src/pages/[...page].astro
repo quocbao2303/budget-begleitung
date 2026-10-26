@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Art from "../components/Art.astro";
+import { authors } from "../lib/content";
+export async function getStaticPaths() {
+  return (await getCollection("pages")).map((page) => ({
+    params: { page: page.data.route.replace(/^\//, "").replace(/\/$/, "") },
+    props: { page },
+  }));
+}
+const { page } = Astro.props;
+const { Content } = await render(page);
+const about = page.data.route === "/ueber-uns/";
+---
+
+<BaseLayout
+  title={page.data.title}
+  description={page.data.description}
+  noindex={page.data.noindex}
+>
+  <header class="page-heading">
+    <p class="eyebrow accent">{page.data.subtitle}</p>
+    <h1>{page.data.title}</h1>
+  </header>
+  {about && (
+    <div class="container">
+      <Art id="begleitung-alltag" class="simple-art" priority />
+    </div>
+  )}
+  <div
+    class="simple-content prose"
+    data-pagefind-body={!page.data.noindex || undefined}
+  >
+    <Content />
+  </div>
+  {about && (
+    <section class="container">
+      <div class="section-heading">
+        <h2>Die Redaktion</h2>
+        <a href="/so-arbeiten-wir/">Unsere Arbeitsweise ↗</a>
+      </div>
+      <div class="team-grid">
+        {Object.entries(authors).map(([id, a]) => (
+          <article class="team-card" id={id}>
+            <img
+              src={`/media/authors/${id}.webp`}
+              alt=""
+              width="640"
+              height="800"
+              loading="lazy"
+            />
+            <h2>{a.name}</h2>
+            <p class="eyebrow accent">{a.role}</p>
+            <p>{a.bio}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>

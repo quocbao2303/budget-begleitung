@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Ihre Merkliste" noindex>
+  <header class="page-heading">
+    <p class="eyebrow accent">Ein guter Gedanke darf bleiben.</p>
+    <h1>Für später gemerkt.</h1>
+    <p>
+      Ihre Auswahl bleibt lokal in diesem Browser. Sie brauchen kein Konto. Wenn
+      Sie die Browserdaten löschen, wird auch Ihre Merkliste entfernt.
+    </p>
+  </header>
+  <section class="simple-content">
+    <ul id="saved-articles" class="saved-list"></ul>
+    <div id="saved-empty" class="empty-state">
+      <h2>Hier ist noch Platz für Klarheit.</h2>
+      <p>
+        Mit dem Lesezeichen am Artikel merken Sie sich, was Sie später
+        weiterlesen möchten.
+      </p>
+      <a class="button" href="/magazin/">
+        Im Magazin stöbern ↗
+      </a>
+    </div>
+    <button class="button outline" id="clear-saved" data-clear-saved hidden>
+      Alle entfernen
+    </button>
+    <noscript>
+      <p class="no-js-warning">
+        Die lokale Merkliste benötigt JavaScript.{" "}
+        <a href="/magazin/">Alle Magazinbeiträge</a> bleiben erreichbar.
+      </p>
+    </noscript>
+  </section>
+</BaseLayout>
