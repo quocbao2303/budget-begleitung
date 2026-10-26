@@ -2654,6 +2654,25 @@ dialog::backdrop {
     transform: none;
   }
 }
-button.text-link{border:0;background:transparent;text-align:left;padding-inline:0}
-.article-heading h1{hyphens:manual}
-@media(max-width:739px){.article-heading h1{font-size:clamp(28px,8vw,34px)}}
+button.text-link {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding-inline: 0;
+}
+.article-heading h1 {
+  hyphens: manual;
+}
+@media (max-width: 739px) {
+  .article-heading h1 {
+    font-size: clamp(28px, 8vw, 34px);
+  }
+}
+
+.toc a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+.toc a {
+  transition: color 0.22s ease;
+}

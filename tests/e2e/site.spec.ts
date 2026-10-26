@@ -234,3 +234,31 @@ test("accessibility on major page families and overlays", async ({ page }) => {
     results.flatMap((x) => x.violations.map((v) => x.route + ": " + v.id)),
   ).toEqual([]);
 });
+
+test("production CSP permits local WebAssembly search", async ({ page }) => {
+  const headers = fs.readFileSync(
+    "artifacts/release/security-headers.conf",
+    "utf8",
+  );
+  const policy = headers.match(/Content-Security-Policy "([^"]+)"/)![1];
+  await page.route("**/*", async (route) => {
+    const response = await route.fetch();
+    const h = response.headers();
+    if (h["content-type"]?.includes("text/html"))
+      await route.fulfill({
+        response,
+        headers: { ...h, "content-security-policy": policy },
+      });
+    else await route.fulfill({ response });
+  });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  await dismiss(page);
+  await page.getByRole("link", { name: "Suche öffnen", exact: true }).click();
+  await page.getByRole("searchbox").fill("Umwandlung");
+  await expect(
+    page.locator("#search-dialog .search-results article").first(),
+  ).toBeVisible();
+  expect(errors).toEqual([]);
+});

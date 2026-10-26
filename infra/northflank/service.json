@@ -1,0 +1,44 @@
+{
+  "name": "Budget Begleitung",
+  "billing": { "deploymentPlan": "nf-compute-10" },
+  "deployment": { "instances": 1, "docker": { "configType": "default" } },
+  "ports": [
+    { "name": "http", "internalPort": 8080, "public": true, "protocol": "HTTP" }
+  ],
+  "buildSource": "git",
+  "vcsData": {
+    "projectUrl": "https://github.com/quocbao2303/budget-begleitung",
+    "projectType": "github",
+    "projectBranch": "main"
+  },
+  "buildSettings": {
+    "dockerfile": {
+      "buildEngine": "buildkit",
+      "dockerFilePath": "/Dockerfile",
+      "dockerWorkDir": "/"
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "type": "readinessProbe",
+      "path": "/healthz",
+      "port": 8080,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 2,
+      "failureThreshold": 3,
+      "successThreshold": 1
+    },
+    {
+      "protocol": "HTTP",
+      "type": "livenessProbe",
+      "path": "/healthz",
+      "port": 8080,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 30,
+      "timeoutSeconds": 2,
+      "failureThreshold": 3
+    }
+  ]
+}
