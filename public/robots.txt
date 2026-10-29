@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Sitemap: https://budget-begleitung.de/sitemap.xml
 Sitemap: https://budget-begleitung.de/sitemap-index.xml

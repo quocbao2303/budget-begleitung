@@ -19,7 +19,7 @@ The font script acquires original licensed files from the official distributor a
 
 `npm run test:e2e` runs interaction, accessibility and responsive browser checks against a preview on port 4321. `npm run build` also validates the 18-article launch inventory, internal links, six external source-link occurrences and indexing rules.
 
-The Dockerfile produces an unprivileged static web server on port 8080, with a `/healthz` readiness route, real 404s, security headers and generated CSP hashes. Only the static build enters the runtime image. There are no runtime secrets or care-data endpoints.
+The Dockerfile produces an unprivileged static web server on port 8080, with a `/healthz` readiness route, 301 redirects to homepage for unknown routes, security headers and generated CSP hashes. Only the static build enters the runtime image. There are no runtime secrets or care-data endpoints.
 
 Calculator values are integer cents. Inputs remain in browser memory. The ruleset has an explicit review deadline and stops numeric calculation when the deadline passes. Renew the review only after checking the primary sources.
 

@@ -50,6 +50,16 @@ if (external.some((x) => /nofollow|sponsored|ugc/.test(x.tag)))
 const sitemap = fs.readFileSync("dist/sitemap-0.xml", "utf8");
 if (/impressum|datenschutz|merkliste|suche|404/.test(sitemap))
   errors.push("Excluded route in sitemap");
+if (!fs.existsSync("dist/sitemap.xml")) {
+  errors.push("Missing dist/sitemap.xml");
+} else {
+  const sitemapXml = fs.readFileSync("dist/sitemap.xml", "utf8");
+  if (/impressum|datenschutz|merkliste|suche|404/.test(sitemapXml))
+    errors.push("Excluded route in sitemap.xml");
+}
+if (fs.existsSync("dist/404.html")) {
+  errors.push("Unexpected 404.html in dist (404 page should be removed)");
+}
 for (const bad of [".env", "docs", "reference", "assets-source", ".git"])
   if (fs.existsSync("dist/" + bad)) errors.push("Private path in dist: " + bad);
 fs.mkdirSync("artifacts/qa", { recursive: true });
