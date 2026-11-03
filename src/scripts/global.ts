@@ -376,10 +376,10 @@ more?.addEventListener("click", async (e) => {
     const pagination = more.closest(".pagination");
     if (pagination) {
       const info = pagination.querySelector(".eyebrow");
-      if (info) info.textContent = "Alle 18 Beiträge geladen";
+      if (info) info.textContent = "Alle 19 Beiträge geladen";
     }
     document.querySelector<HTMLElement>("[data-archive-status]")!.textContent =
-      `${count} weitere Beiträge geladen. Alle Beiträge der Startausgabe sind sichtbar.`;
+      `${count} weitere Beiträge geladen. Alle Magazinbeiträge sind sichtbar.`;
   } catch {
     more.removeAttribute("data-load-more");
     more.textContent = "Seite 2 öffnen ↗";

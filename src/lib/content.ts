@@ -87,4 +87,6 @@ export const imageAlt: Record<string, string> = {
   "budget-stroemung": "Petrolfarbene und mintgrüne Pigmentströme.",
   "klarer-horizont":
     "Ein heller Bogen über einer ruhigen mineralblauen Landschaft.",
+  "verhinderungspflege-frist":
+    "Blanko-Kalender, Brief und Notizbuch auf einem sonnigen Schreibtisch; ein kleiner terrakottafarbener Marker steht für die Frist.",
 };
