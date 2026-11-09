@@ -40,18 +40,18 @@ for (const f of files) {
   )
     errors.push(f + ": expected noindex");
 }
-if (articles !== 19) errors.push("Expected 19 articles, found " + articles);
-if (external.length !== 7 || new Set(external.map((x) => x.href)).size !== 7)
+if (articles !== 20) errors.push("Expected 20 articles, found " + articles);
+if (external.length !== 8 || new Set(external.map((x) => x.href)).size !== 8)
   errors.push(
-    "Expected seven unique external link occurrences, got " + external.length,
+    "Expected eight unique external link occurrences, got " + external.length,
   );
-const newArticle = files.find((f) => f.includes("verhinderungspflege-erstattungsfrist"));
+const newArticle = files.find((f) => f.includes("pflegehilfsmittel-zum-verbrauch"));
 if (newArticle) {
   const newPage = fs.readFileSync(path.join("dist", newArticle), "utf8");
   const articleExternal = [...newPage.matchAll(/<a\b[^>]*href="(https?:[^\"]+)"[^>]*>/g)]
     .map((m) => m[1]).filter((href) => !href.startsWith("https://budget-begleitung.de/"));
   if (articleExternal.length !== 1)
-    errors.push("A19 must contain exactly one external link, found " + articleExternal.length);
+    errors.push("A20 must contain exactly one external link, found " + articleExternal.length);
 }
 if (external.some((x) => /nofollow|sponsored|ugc/.test(x.tag)))
   errors.push("Non-followed launch source");

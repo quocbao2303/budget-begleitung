@@ -6,7 +6,7 @@ import { articles, minutes, pillarName } from "../lib/content";
 const all = await articles();
 const byId = (id: string) => all.find((a) => a.data.id === id)!;
 const feature = byId("A01");
-const rail = ["A07", "A10", "A19", "A06"];
+const rail = ["A07", "A10", "A20", "A06"];
 const essentials = ["A02", "A03", "A11", "A12", "A14"];
 const sections = [
   { pillar: "budgetieren", ids: ["A04", "A05"] },

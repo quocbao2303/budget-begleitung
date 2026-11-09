@@ -89,4 +89,6 @@ export const imageAlt: Record<string, string> = {
     "Ein heller Bogen über einer ruhigen mineralblauen Landschaft.",
   "verhinderungspflege-frist":
     "Blanko-Kalender, Brief und Notizbuch auf einem sonnigen Schreibtisch; ein kleiner terrakottafarbener Marker steht für die Frist.",
+  "pflegehilfsmittel-verbrauch":
+    "Abstraktes Stillleben mit gefalteter Bettschutzeinlage, Einmalhandschuhen, Maske und unbeschrifteter Desinfektionsflasche auf matten Papierschichten.",
 };
